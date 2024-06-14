@@ -1,5 +1,5 @@
-import "./styles.css";
-import { useCallback, useState } from "react";
+import "../App.css";
+import { useCallback, useEffect, useState } from "react";
 import { PieChart, Pie, Sector } from "recharts";
 
 const renderActiveShape = (props: any) => {
@@ -75,7 +75,31 @@ const renderActiveShape = (props: any) => {
   );
 };
 
-export default function App() {
+export default function Bar() {
+  let [info] = useState(window.localStorage.getItem("finance"));
+  const [data, setData] = useState([
+    { name: "savings", value: 0 },
+    { name: "expenses", value: 0 },
+  ]);
+
+  useEffect(() => {
+    if (info) {
+      const dt = JSON.parse(window.localStorage.getItem("finance") as any);
+
+      const expense = dt
+        .filter((item: any) => item.type == "expenses")
+        .reduce((total: any, num: any) => total + parseInt(num.amount), 0);
+
+      const savings = dt
+        .filter((item: any) => item.type == "savings")
+        .reduce((total: any, num: any) => total + parseInt(num.amount), 0);
+
+      setData([
+        { name: "savings", value: savings },
+        { name: "expenses", value: expense },
+      ]);
+    }
+  }, []);
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
     (_: any, index: any) => {
