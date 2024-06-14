@@ -42,14 +42,14 @@
   border-radius: 10px;
 }
 
-@media (min-width: "768px") {
+@media (min-width: 768px) {
   .container-input form div label {
     font-size: 20px;
   }
   .container-input form div input,
   .container-input form div select {
     height: 45px;
-    width: 50vw;
+    width: 25vw;
   }
 }
 .App {
