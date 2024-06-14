@@ -5,9 +5,32 @@ const Input = () => {
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
 
+  const hadndleSubmit = () => {
+    let data;
+    if (window.localStorage.getItem("finance")) {
+      data = JSON.parse(window.localStorage.getItem("finance") as string);
+    } else {
+      data = [];
+    }
+
+    const payload = {
+      amount: amount,
+      description: desc,
+      type: type,
+    };
+
+    data.push(payload);
+    window.localStorage.setItem("finance", JSON.stringify(data));
+  };
   return (
     <div className="container-input">
-      <form action="" onSubmit={() => {}}>
+      <form
+        action=""
+        onSubmit={(e) => {
+          e.preventDefault();
+          hadndleSubmit();
+        }}
+      >
         <div className="">
           <label htmlFor="">Description</label>
           <input
